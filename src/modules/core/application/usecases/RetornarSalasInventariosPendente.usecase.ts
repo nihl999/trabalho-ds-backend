@@ -30,7 +30,7 @@ export class RetornarSalasInventariosPendentesUsecase {
       where: {
         inventario: { id: inventarios[0].id },
       },
-      relations: { espaco: true },
+      relations: { espaco: true, responsavel: true },
     })
     this.logger.debug(espacosInventario)
     return espacosInventario ? espacosInventario : []
