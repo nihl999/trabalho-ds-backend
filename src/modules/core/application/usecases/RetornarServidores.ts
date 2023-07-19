@@ -29,6 +29,6 @@ export class RetornarServidoresUsecase {
         cargo: true,
       },
     })
-    return false
+    return usuarios
   }
 }
