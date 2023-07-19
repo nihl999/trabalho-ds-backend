@@ -67,7 +67,7 @@ export class ImportarCsvUsecase {
         this.logger.error('PUTA Q PARIU')
         continue
       }
-      const espacoId = espacoSplit[0]
+      const espacoId = espacoSplit[0] || 'espaço sem nome'
       const espacoNome = espacoSplit.slice(1).join('-')
       //   this.logger.debug(espacoNome)
       let sala

@@ -28,9 +28,11 @@ export class RetornarSalasInventariosPendentesUsecase {
     if (!inventarios || inventarios.length <= 0 || inventarios == null) return []
     const espacosInventario = await this.espacoInventarioRepository.find({
       where: {
-        inventario: inventarios[0],
+        inventario: { id: inventarios[0].id },
       },
+      relations: { espaco: true },
     })
+    this.logger.debug(espacosInventario)
     return espacosInventario ? espacosInventario : []
   }
 }
