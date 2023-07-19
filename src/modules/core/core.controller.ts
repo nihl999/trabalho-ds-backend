@@ -3,6 +3,7 @@ import { FileInterceptor } from '@nestjs/platform-express'
 import { ApiTags } from '@nestjs/swagger'
 import { Response } from 'express'
 import { ImportarCsvUsecase } from './application/usecases/ImportarCSV.usecase'
+import { RetornarServidoresUsecase } from './application/usecases/RetornarServidores'
 import { TaProntoUsecase } from './application/usecases/TaPronto.usecase'
 import { CoreModule } from './core.module'
 
@@ -13,7 +14,8 @@ export class CoreController {
 
   constructor(
     private readonly importarCsvUsecase: ImportarCsvUsecase,
-    private readonly taProntoUsecase: TaProntoUsecase
+    private readonly taProntoUsecase: TaProntoUsecase,
+    private readonly retornarServidoresUsecase: RetornarServidoresUsecase
   ) {}
 
   @Post('importar-csv')
@@ -31,6 +33,12 @@ export class CoreController {
   @Get('ta-pronto')
   public async taPronto(@Query() query, @Res() response: Response) {
     const resposta = await this.taProntoUsecase.execute(query)
+    return response.status(200).json({ message: resposta })
+  }
+
+  @Get('retornar-servidores')
+  public async retornarServidores(@Query() query, @Res() response: Response) {
+    const resposta = await this.retornarServidoresUsecase.execute()
     return response.status(200).json({ message: resposta })
   }
 }

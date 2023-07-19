@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
+import { Usecases } from './application/usecases'
 import { ImportarCsvUsecase } from './application/usecases/ImportarCSV.usecase'
 import { TaProntoUsecase } from './application/usecases/TaPronto.usecase'
 import { CoreController } from './core.controller'
@@ -14,6 +15,6 @@ import { UsuarioModel } from './infra/models/Usuario'
     TypeOrmModule.forFeature([PatrimonioModel, InventarioModel, UsuarioModel, EspacoModel, EspacoInventarioModel]),
   ],
   controllers: [CoreController],
-  providers: [ImportarCsvUsecase, TaProntoUsecase],
+  providers: [...Usecases],
 })
 export class CoreModule {}
