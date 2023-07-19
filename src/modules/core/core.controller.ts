@@ -5,6 +5,7 @@ import { Response } from 'express'
 import { ImportarCsvUsecase } from './application/usecases/ImportarCSV.usecase'
 import { LerPatrimonioUsecase } from './application/usecases/LerPatrimonio.usecase'
 import { RetornarInventariosPendentesUsecase } from './application/usecases/RetornarInventariosPendente.usecase'
+import { RetornarSalasInventariosPendentesUsecase } from './application/usecases/RetornarSalasInventariosPendente.usecase'
 import { RetornarServidoresUsecase } from './application/usecases/RetornarServidores'
 import { TaProntoUsecase } from './application/usecases/TaPronto.usecase'
 import { CoreModule } from './core.module'
@@ -20,6 +21,7 @@ export class CoreController {
     private readonly taProntoUsecase: TaProntoUsecase,
     private readonly retornarServidoresUsecase: RetornarServidoresUsecase,
     private readonly retornarInventariosPendentesUsecase: RetornarInventariosPendentesUsecase,
+    private readonly retornarSalasInventariosPendentesUsecase: RetornarSalasInventariosPendentesUsecase,
     private readonly lerPatrimonioUsecase: LerPatrimonioUsecase
   ) {}
 
@@ -50,6 +52,12 @@ export class CoreController {
   @Get('retornar-inventarios-pendentes')
   public async retornarInventariosPendentes(@Res() response: Response) {
     const resposta = await this.retornarInventariosPendentesUsecase.execute()
+    return response.status(200).json({ message: resposta })
+  }
+
+  @Get('retornar-salas-inventarios-pendentes')
+  public async retornarSalasInventariosPendentes(@Res() response: Response) {
+    const resposta = await this.retornarSalasInventariosPendentesUsecase.execute()
     return response.status(200).json({ message: resposta })
   }
   @Get('ler-patrimonio')
