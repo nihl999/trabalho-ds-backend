@@ -66,7 +66,7 @@ export class CoreController {
     return response.status(200).json({ message: resposta })
   }
 
-  @Get('/set-responsavel-sala')
+  @Post('/set-responsavel-sala')
   public async setResponsavelSala(@Body() body: SetServidorResponsavelProps, @Res() response: Response) {
     const resposta = await this.setServidorResponsavelSala.execute(body)
     return response.status(200).json({ message: resposta })
