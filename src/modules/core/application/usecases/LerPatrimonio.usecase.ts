@@ -18,7 +18,9 @@ export class LerPatrimonioUsecase {
 
   constructor(
     @InjectRepository(PatrimonioModel)
-    private patrimonioRepository: Repository<PatrimonioModel>
+    private patrimonioRepository: Repository<PatrimonioModel>,
+    @InjectRepository(EspacoInventarioModel)
+    private espacoInventarioRepository: Repository<EspacoInventarioModel>
   ) {}
 
   public async execute(props: LerPatrimonioProps) {
@@ -32,12 +34,16 @@ export class LerPatrimonioUsecase {
       },
     })
     if (!patrimonio) {
-      const patrimonioInstante = this.patrimonioRepository.create({
-        numero: props.numero,
-        espacoInventario: {
+      const espacoInventario = await this.espacoInventarioRepository.findOne({
+        where: {
           espaco: { id: props.espaco },
           inventario: { id: props.inventario },
         },
+      })
+      espacoInventario.patrimoniosLidos += 1
+      const patrimonioInstante = this.patrimonioRepository.create({
+        numero: props.numero,
+        espacoInventario: espacoInventario,
         tipoCriacao: TiposCriacaoPatrimonio.ON_FLY,
         lido: true,
         dataLeitura: new Date(),
@@ -62,6 +68,13 @@ export class LerPatrimonioUsecase {
         status: TipoLeituraPatrimonio.OBSERVACAO,
       }
     }
+    const espacoInventario = await this.espacoInventarioRepository.findOne({
+      where: {
+        espaco: { id: props.espaco },
+        inventario: { id: props.inventario },
+      },
+    })
+    espacoInventario.patrimoniosLidos += 1
     const patri = this.patrimonioRepository.merge(patrimonio, {
       lido: true,
       dataLeitura: new Date(),
