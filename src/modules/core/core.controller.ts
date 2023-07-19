@@ -17,6 +17,7 @@ import { TaProntoUsecase } from './application/usecases/TaPronto.usecase'
 import { CoreModule } from './core.module'
 import { UsuarioModel } from './infra/models/Usuario'
 import { RetornarSalasInventariosServidorUsecase } from './application/usecases/RetornarSalasInventariosServidor.usecase'
+import { RetornarPatrimonioSalaUsecase } from './application/usecases/RetornaPatrimonioSala.usecase'
 
 @Controller('core')
 @ApiTags('Core Controller')
@@ -33,7 +34,8 @@ export class CoreController {
     private readonly lerPatrimonioUsecase: LerPatrimonioUsecase,
     private readonly iniciarInventarioUsecase: IniciarInventarioUsecase,
     private readonly setServidorResponsavelSala: SetServidorResponsavelSalaUsecase,
-    private readonly retornarSalasInventariosServidorUsecase: RetornarSalasInventariosServidorUsecase
+    private readonly retornarSalasInventariosServidorUsecase: RetornarSalasInventariosServidorUsecase,
+    private readonly retornarPatrimonioSala: RetornarPatrimonioSalaUsecase
   ) {}
 
   @Post('importar-csv')
@@ -81,6 +83,12 @@ export class CoreController {
   @Get('retornar-inventarios-iniciados')
   public async retornarSalasInventariosIniciados(@Res() response: Response) {
     const resposta = await this.retornarInventariosIniciadosUsecase.execute()
+    return response.status(200).json({ message: resposta })
+  }
+
+  @Get('retorna-patrimonio-sala/:idSala')
+  public async retornaPatrimonioSala(@Param() params: { idSala: string }, @Res() response: Response) {
+    const resposta = await this.retornarPatrimonioSala.execute(params.idSala)
     return response.status(200).json({ message: resposta })
   }
 
