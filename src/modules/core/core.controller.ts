@@ -4,6 +4,7 @@ import { ApiTags } from '@nestjs/swagger'
 import { Response } from 'express'
 import { ImportarCsvUsecase } from './application/usecases/ImportarCSV.usecase'
 import { LerPatrimonioUsecase } from './application/usecases/LerPatrimonio.usecase'
+import { RetornarInventariosIniciadosUsecase } from './application/usecases/RetornarInventariosIniciados.usecase'
 import { RetornarInventariosPendentesUsecase } from './application/usecases/RetornarInventariosPendente.usecase'
 import { RetornarSalasInventariosPendentesUsecase } from './application/usecases/RetornarSalasInventariosPendente.usecase'
 import { RetornarServidoresUsecase } from './application/usecases/RetornarServidores'
@@ -26,6 +27,7 @@ export class CoreController {
     private readonly retornarServidoresUsecase: RetornarServidoresUsecase,
     private readonly retornarInventariosPendentesUsecase: RetornarInventariosPendentesUsecase,
     private readonly retornarSalasInventariosPendentesUsecase: RetornarSalasInventariosPendentesUsecase,
+    private readonly retornarInventariosIniciadosUsecase: RetornarInventariosIniciadosUsecase,
     private readonly lerPatrimonioUsecase: LerPatrimonioUsecase,
     private readonly setServidorResponsavelSala: SetServidorResponsavelSalaUsecase
   ) {}
@@ -63,6 +65,12 @@ export class CoreController {
   @Get('retornar-salas-inventarios-pendentes')
   public async retornarSalasInventariosPendentes(@Res() response: Response) {
     const resposta = await this.retornarSalasInventariosPendentesUsecase.execute()
+    return response.status(200).json({ message: resposta })
+  }
+
+  @Get('retornar-inventarios-iniciados')
+  public async retornarSalasInventariosIniciados(@Res() response: Response) {
+    const resposta = await this.retornarInventariosIniciadosUsecase.execute()
     return response.status(200).json({ message: resposta })
   }
 
