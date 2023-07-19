@@ -23,6 +23,6 @@ export class RetornarInventariosPendentesUsecase {
         status: StatusInventario.PENDENTE_INICIO,
       },
     })
-    return inventarios
+    return inventarios ? inventarios : []
   }
 }

@@ -33,6 +33,6 @@ export class RetornarServidoresUsecase {
         cargo: true,
       },
     })
-    return usuarios
+    return usuarios ? usuarios : []
   }
 }
