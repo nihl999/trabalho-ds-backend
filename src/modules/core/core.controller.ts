@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Logger, Post, Query, Res, UploadedFile, UseInterceptors } from '@nestjs/common'
+import { Body, Controller, Get, Logger, Param, Post, Query, Res, UploadedFile, UseInterceptors } from '@nestjs/common'
 import { FileInterceptor } from '@nestjs/platform-express'
 import { ApiTags } from '@nestjs/swagger'
 import { Response } from 'express'
@@ -16,6 +16,7 @@ import {
 import { TaProntoUsecase } from './application/usecases/TaPronto.usecase'
 import { CoreModule } from './core.module'
 import { UsuarioModel } from './infra/models/Usuario'
+import { RetornarSalasInventariosServidorUsecase } from './application/usecases/RetornarSalasInventariosServidor.usecase'
 
 @Controller('core')
 @ApiTags('Core Controller')
@@ -31,7 +32,8 @@ export class CoreController {
     private readonly retornarInventariosIniciadosUsecase: RetornarInventariosIniciadosUsecase,
     private readonly lerPatrimonioUsecase: LerPatrimonioUsecase,
     private readonly iniciarInventarioUsecase: IniciarInventarioUsecase,
-    private readonly setServidorResponsavelSala: SetServidorResponsavelSalaUsecase
+    private readonly setServidorResponsavelSala: SetServidorResponsavelSalaUsecase,
+    private readonly retornarSalasInventariosServidorUsecase: RetornarSalasInventariosServidorUsecase
   ) {}
 
   @Post('importar-csv')
@@ -67,6 +69,12 @@ export class CoreController {
   @Get('retornar-salas-inventarios-pendentes')
   public async retornarSalasInventariosPendentes(@Res() response: Response) {
     const resposta = await this.retornarSalasInventariosPendentesUsecase.execute()
+    return response.status(200).json({ message: resposta })
+  }
+
+  @Get('retornar-salas-inventarios-servidor/:idServidor')
+  public async retornarSalasInventariosServidor(@Param() params: { idServidor: number }, @Res() response: Response) {
+    const resposta = await this.retornarSalasInventariosServidorUsecase.execute(params)
     return response.status(200).json({ message: resposta })
   }
 
