@@ -18,6 +18,7 @@ import { CoreModule } from './core.module'
 import { UsuarioModel } from './infra/models/Usuario'
 import { RetornarSalasInventariosServidorUsecase } from './application/usecases/RetornarSalasInventariosServidor.usecase'
 import { RetornarPatrimonioSalaUsecase } from './application/usecases/RetornaPatrimonioSala.usecase'
+import { RetornarAdminUsecase } from './application/usecases/RetornarAdmin.usecase'
 
 @Controller('core')
 @ApiTags('Core Controller')
@@ -28,6 +29,7 @@ export class CoreController {
     private readonly importarCsvUsecase: ImportarCsvUsecase,
     private readonly taProntoUsecase: TaProntoUsecase,
     private readonly retornarServidoresUsecase: RetornarServidoresUsecase,
+    private readonly retornarAdminUsecase: RetornarAdminUsecase,
     private readonly retornarInventariosPendentesUsecase: RetornarInventariosPendentesUsecase,
     private readonly retornarSalasInventariosPendentesUsecase: RetornarSalasInventariosPendentesUsecase,
     private readonly retornarInventariosIniciadosUsecase: RetornarInventariosIniciadosUsecase,
@@ -59,6 +61,12 @@ export class CoreController {
   @Get('retornar-servidores')
   public async retornarServidores(@Query() query, @Res() response: Response) {
     const resposta = await this.retornarServidoresUsecase.execute()
+    return response.status(200).json({ message: resposta })
+  }
+
+  @Get('retornar-admin')
+  public async retornarAdmin(@Query() query, @Res() response: Response) {
+    const resposta = await this.retornarAdminUsecase.execute()
     return response.status(200).json({ message: resposta })
   }
 
