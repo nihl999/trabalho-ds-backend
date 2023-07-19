@@ -1,6 +1,7 @@
 import { ImportarCsvUsecase } from './ImportarCSV.usecase'
 import { IniciarInventarioUsecase } from './IniciarInventario.usecase'
 import { LerPatrimonioUsecase } from './LerPatrimonio.usecase'
+import { RetornarInventariosIniciadosUsecase } from './RetornarInventariosIniciados.usecase'
 import { RetornarInventariosPendentesUsecase } from './RetornarInventariosPendente.usecase'
 import { RetornarSalasInventariosPendentesUsecase } from './RetornarSalasInventariosPendente.usecase'
 import { RetornarServidoresUsecase } from './RetornarServidores'
@@ -17,4 +18,5 @@ export const Usecases = [
   SetServidorResponsavelSalaUsecase,
   IniciarInventarioUsecase,
   RetornarInventariosPendentesUsecase,
+  RetornarInventariosIniciadosUsecase,
 ]

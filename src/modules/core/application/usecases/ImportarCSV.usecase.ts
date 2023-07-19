@@ -134,11 +134,14 @@ export class ImportarCsvUsecase {
         descricao: linha.descricao,
         espacoInventario: {
           ...espacoInventario,
-          quantidadePatrimonios: espacoInventario.quantidadePatrimonios + 1,
         },
         lido: false,
         responsavel: usuario,
         tipoCriacao: TiposCriacaoPatrimonio.IMPORTADO,
+      })
+
+      await this.espacoInventarioRepository.update(espacoInventario, {
+        quantidadePatrimonios: espacoInventario.quantidadePatrimonios + 1,
       })
 
       await this.patrimonioRepository.save(patrimonio)

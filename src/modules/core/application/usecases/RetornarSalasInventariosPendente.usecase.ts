@@ -21,9 +21,14 @@ export class RetornarSalasInventariosPendentesUsecase {
 
   public async execute() {
     const inventarios = await this.inventarioRepository.find({
-      where: {
-        status: StatusInventario.PENDENTE_INICIO,
-      },
+      where: [
+        {
+          status: StatusInventario.PENDENTE_INICIO,
+        },
+        {
+          status: StatusInventario.INICIADO,
+        },
+      ],
     })
     if (!inventarios || inventarios.length <= 0 || inventarios == null) return []
     const espacosInventario = await this.espacoInventarioRepository.find({
