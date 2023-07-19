@@ -24,7 +24,8 @@ export class IniciarInventarioUsecase {
       },
     })
     if (!inventarios || inventarios == null) return false
-    this.inventarioRepository.update(inventarios, { status: StatusInventario.INICIADO })
+    inventarios.status = StatusInventario.INICIADO
+    await this.inventarioRepository.save(inventarios)
     return true
   }
 }
