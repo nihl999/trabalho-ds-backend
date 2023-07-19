@@ -30,7 +30,7 @@ export class SetServidorResponsavelSalaUsecase {
       },
     })
     if (!espacoInventario || espacoInventario == null) return false
-    espacoInventario.responsavel.id = props.novoResponsavel
+    this.espacoInventarioRepository.update(espacoInventario, { responsavel: { id: props.novoResponsavel } })
     this.espacoInventarioRepository.save(espacoInventario)
     return true
   }
