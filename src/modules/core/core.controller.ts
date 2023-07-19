@@ -3,6 +3,7 @@ import { FileInterceptor } from '@nestjs/platform-express'
 import { ApiTags } from '@nestjs/swagger'
 import { Response } from 'express'
 import { ImportarCsvUsecase } from './application/usecases/ImportarCSV.usecase'
+import { IniciarInventarioUsecase } from './application/usecases/IniciarInventario.usecase'
 import { LerPatrimonioUsecase } from './application/usecases/LerPatrimonio.usecase'
 import { RetornarInventariosIniciadosUsecase } from './application/usecases/RetornarInventariosIniciados.usecase'
 import { RetornarInventariosPendentesUsecase } from './application/usecases/RetornarInventariosPendente.usecase'
@@ -29,6 +30,7 @@ export class CoreController {
     private readonly retornarSalasInventariosPendentesUsecase: RetornarSalasInventariosPendentesUsecase,
     private readonly retornarInventariosIniciadosUsecase: RetornarInventariosIniciadosUsecase,
     private readonly lerPatrimonioUsecase: LerPatrimonioUsecase,
+    private readonly iniciarInventarioUsecase: IniciarInventarioUsecase,
     private readonly setServidorResponsavelSala: SetServidorResponsavelSalaUsecase
   ) {}
 
@@ -79,6 +81,13 @@ export class CoreController {
     const resposta = await this.setServidorResponsavelSala.execute(body)
     return response.status(200).json({ message: resposta })
   }
+
+  @Post('/iniciar-inventario')
+  public async iniciarInventario(@Res() response: Response) {
+    const resposta = await this.iniciarInventarioUsecase.execute()
+    return response.status(200).json({ message: resposta })
+  }
+
   @Get('ler-patrimonio')
   public async lerPatrimonio(
     @Body()
