@@ -7,6 +7,12 @@ export enum TiposCriacaoPatrimonio {
   IMPORTADO,
   ON_FLY,
 }
+
+export enum TipoLeituraPatrimonio {
+  CERTO,
+  OBSERVACAO,
+  ERRO,
+}
 @Entity('patrimonios')
 export class PatrimonioModel {
   @PrimaryColumn()

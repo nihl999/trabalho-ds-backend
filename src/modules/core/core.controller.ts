@@ -3,9 +3,11 @@ import { FileInterceptor } from '@nestjs/platform-express'
 import { ApiTags } from '@nestjs/swagger'
 import { Response } from 'express'
 import { ImportarCsvUsecase } from './application/usecases/ImportarCSV.usecase'
+import { LerPatrimonioUsecase } from './application/usecases/LerPatrimonio.usecase'
 import { RetornarServidoresUsecase } from './application/usecases/RetornarServidores'
 import { TaProntoUsecase } from './application/usecases/TaPronto.usecase'
 import { CoreModule } from './core.module'
+import { UsuarioModel } from './infra/models/Usuario'
 
 @Controller('core')
 @ApiTags('Core Controller')
@@ -15,7 +17,8 @@ export class CoreController {
   constructor(
     private readonly importarCsvUsecase: ImportarCsvUsecase,
     private readonly taProntoUsecase: TaProntoUsecase,
-    private readonly retornarServidoresUsecase: RetornarServidoresUsecase
+    private readonly retornarServidoresUsecase: RetornarServidoresUsecase,
+    private readonly lerPatrimonioUsecase: LerPatrimonioUsecase
   ) {}
 
   @Post('importar-csv')
@@ -39,6 +42,21 @@ export class CoreController {
   @Get('retornar-servidores')
   public async retornarServidores(@Query() query, @Res() response: Response) {
     const resposta = await this.retornarServidoresUsecase.execute()
+    return response.status(200).json({ message: resposta })
+  }
+
+  @Get('ler-patrimonio')
+  public async lerPatrimonio(
+    @Body()
+    body: {
+      servidor: UsuarioModel
+      espaco: string
+      inventario: number
+      numero: number
+    },
+    @Res() response: Response
+  ) {
+    const resposta = await this.lerPatrimonioUsecase.execute(body)
     return response.status(200).json({ message: resposta })
   }
 }

@@ -24,6 +24,10 @@ export class RetornarServidoresUsecase {
       select: {
         id: true,
         nome: true,
+        cargo: {
+          id: true,
+          nome: true,
+        },
       },
       relations: {
         cargo: true,
