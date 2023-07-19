@@ -3,6 +3,7 @@ import { LerPatrimonioUsecase } from './LerPatrimonio.usecase'
 import { RetornarInventariosPendentesUsecase } from './RetornarInventariosPendente.usecase'
 import { RetornarSalasInventariosPendentesUsecase } from './RetornarSalasInventariosPendente.usecase'
 import { RetornarServidoresUsecase } from './RetornarServidores'
+import { SetServidorResponsavelSalaUsecase } from './SetServidorResponsavelSala.usecase'
 import { TaProntoUsecase } from './TaPronto.usecase'
 
 export const Usecases = [
@@ -12,4 +13,5 @@ export const Usecases = [
   LerPatrimonioUsecase,
   RetornarInventariosPendentesUsecase,
   RetornarSalasInventariosPendentesUsecase,
+  SetServidorResponsavelSalaUsecase,
 ]

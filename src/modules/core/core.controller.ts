@@ -7,6 +7,10 @@ import { LerPatrimonioUsecase } from './application/usecases/LerPatrimonio.useca
 import { RetornarInventariosPendentesUsecase } from './application/usecases/RetornarInventariosPendente.usecase'
 import { RetornarSalasInventariosPendentesUsecase } from './application/usecases/RetornarSalasInventariosPendente.usecase'
 import { RetornarServidoresUsecase } from './application/usecases/RetornarServidores'
+import {
+  SetServidorResponsavelProps,
+  SetServidorResponsavelSalaUsecase,
+} from './application/usecases/SetServidorResponsavelSala.usecase'
 import { TaProntoUsecase } from './application/usecases/TaPronto.usecase'
 import { CoreModule } from './core.module'
 import { UsuarioModel } from './infra/models/Usuario'
@@ -22,7 +26,8 @@ export class CoreController {
     private readonly retornarServidoresUsecase: RetornarServidoresUsecase,
     private readonly retornarInventariosPendentesUsecase: RetornarInventariosPendentesUsecase,
     private readonly retornarSalasInventariosPendentesUsecase: RetornarSalasInventariosPendentesUsecase,
-    private readonly lerPatrimonioUsecase: LerPatrimonioUsecase
+    private readonly lerPatrimonioUsecase: LerPatrimonioUsecase,
+    private readonly setServidorResponsavelSala: SetServidorResponsavelSalaUsecase
   ) {}
 
   @Post('importar-csv')
@@ -58,6 +63,12 @@ export class CoreController {
   @Get('retornar-salas-inventarios-pendentes')
   public async retornarSalasInventariosPendentes(@Res() response: Response) {
     const resposta = await this.retornarSalasInventariosPendentesUsecase.execute()
+    return response.status(200).json({ message: resposta })
+  }
+
+  @Get('/set-responsavel-sala')
+  public async setResponsavelSala(@Body() body: SetServidorResponsavelProps, @Res() response: Response) {
+    const resposta = await this.setServidorResponsavelSala.execute(body)
     return response.status(200).json({ message: resposta })
   }
   @Get('ler-patrimonio')
